@@ -1,0 +1,8 @@
+{
+  "text": "REPLACE_WITH_APPROVED_TEXT",
+  "model": "eleven_multilingual_v2",
+  "maxCredits": 100,
+  "commercialRightsConfirmed": false,
+  "standardRateConfirmed": false,
+  "voices": [{"name": "VOICE_LABEL", "id": ""}]
+}
