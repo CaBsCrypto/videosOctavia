@@ -6,7 +6,7 @@ Initial code-only setup for a video project using Remotion and ElevenLabs.
 
 - Local ElevenLabs prototype, placeholder configuration and offline tests are prepared in `elevenlabs-local/`.
 - The ElevenLabs API is not connected. No API key or account configuration is included.
-- Remotion package import and video rendering are still pending. This repository does not yet contain a working Remotion composition or renderer.
+- Library package import and successful video rendering are still pending. An independent diagnostic composition is available in `remotion-smoke/`; see its README for verified installation, compilation and browser blockers.
 
 ## Saved environment setup
 
