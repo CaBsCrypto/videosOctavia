@@ -46,3 +46,26 @@ and no audio stream. Do not use security-disabling flags to make this pass.
 
 Official renderer documentation:
 https://www.remotion.dev/docs/renderer/render-media
+
+## Manual GitHub Actions preparation
+
+`.github/workflows/remotion-smoke.yml` is manual-only (`workflow_dispatch`),
+uses standard `ubuntu-24.04`, checks that the repo is public and limits the job
+to 10 minutes. It uses read-only repository permissions, no secrets, no Actions
+cache, no schedules and no push trigger. It preserves the sandbox preflight.
+It has not been dispatched: the pinned launcher remains blocked by that check.
+This is workflow preparation, not a successful remote render.
+
+Public repository status was confirmed through the authorized GitHub app.
+Standard hosted runner usage is free for public repositories; larger runners
+are charged. Artifact storage has separate quota rules. No artifact upload is
+configured because the available storage allowance and zero-charge guarantee
+were not verified. If a secure launch path is approved and implemented, resolve
+artifact billing before adding an upload (maximum intended retention: 1 day).
+`verify.mjs` checks a real ffprobe result; there is no generated MP4 yet.
+
+GitHub requires manual workflows to be registered on the default branch before
+dispatch. This workflow remains on `work`; no default-branch merge was performed
+and no Actions settings or permissions were changed.
+
+Billing: https://docs.github.com/en/billing/concepts/product-billing/github-actions

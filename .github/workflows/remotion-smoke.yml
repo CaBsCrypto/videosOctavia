@@ -1,0 +1,37 @@
+name: Manual Remotion smoke
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  smoke:
+    # Standard GitHub-hosted runner only; do not run if repo becomes private.
+    if: github.event.repository.private == false
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    defaults:
+      run:
+        working-directory: remotion-smoke
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Install locked dependencies (no Actions cache)
+        run: npm ci --cache "$RUNNER_TEMP/npm-cache" --no-audit --no-fund
+      - name: Test composition and sandbox preflight
+        run: npm test
+      - name: Render only through sandbox-preserving supported launcher
+        # Currently fails before browser download/launch on Remotion 4.0.532.
+        # Keep that failure visible; do not skip or bypass the safety preflight.
+        run: npm run render
+      - name: Verify actual MP4
+        run: |
+          ffprobe -v error -count_frames -show_streams -show_format -of json output/smoke.mp4 > output/probe.json
+          node verify.mjs output/probe.json
+      # No artifact upload: storage quota/cost has not been verified.
